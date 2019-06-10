@@ -1,0 +1,21 @@
+{
+  "name": "api.ivelthoven.nl",
+  "version": "1.0.0",
+  "description": "An API Server for ivelthoven",
+  "main": "index.js",
+  "dependencies": {
+    "got": "^9.6.0",
+    "restify": "^8.3.3",
+    "sqlite3": "^4.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "API",
+    "Ivelthoven"
+  ],
+  "author": "Ivo Velthoven",
+  "license": "ISC"
+}

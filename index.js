@@ -2,6 +2,8 @@ const restify = require('restify');
 
 // require("./db");
 
+const PORT = 80;
+
 const server = restify.createServer({
   name: 'api-ivelthoven',
   version: '1.0.0'
@@ -18,6 +20,6 @@ server.get("/", (req, res) => {
 require("./routes/github");
 
 // Start server
-server.listen(8080, () => {
+server.listen(PORT, () => {
   console.log('\x1b[34m%s\x1b[0m', `Ready on ${server.url}`);
 });

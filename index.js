@@ -1,33 +1,23 @@
 const restify = require('restify');
-const fs = require('fs');
-require("./db");
 
-const server = restify.createServer();
+// require("./db");
+
+const server = restify.createServer({
+  name: 'api-ivelthoven',
+  version: '1.0.0'
+});
 
 module.exports = server;
 
-// Load routes
-fs.readdir("./routes", (err,files) => {
-    if (err) console.log(err);
-
-    let jsFile = files.filter(f => f.split(".").pop() === "js")
-    if(jsFile.length <= 0){
-        console.log("Couldn't find routes..")
-        return;
-    }
-
-    jsFile.forEach((f, i) => {
-        require(`./routes/${f}`);
-        console.log('\x1b[34m%s\x1b[0m', `${f} route loaded..`);
-    });
-})
-
 // Index
-server.get("/", (req, res, next) => {
+server.get("/", (req, res) => {
     res.send("Welcome to IVelthoven API");
 })
 
+// Github Routes
+require("./routes/github");
+
 // Start server
-server.listen(8080, function () {
+server.listen(8080, () => {
   console.log('\x1b[34m%s\x1b[0m', `Ready on ${server.url}`);
 });

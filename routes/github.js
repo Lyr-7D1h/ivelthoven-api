@@ -1,5 +1,4 @@
 const server = require("../index");
-const got = require('got');
 const db = require('../db');
 
 
@@ -30,11 +29,8 @@ const db = require('../db');
 server.get("/github", (req, res, next) => {
     db.getGithub().then((data) => {
         res.send(data);
+    }).catch(err => {
+        console.log(err);
+        res.send("something went wrong")
     })
-
-    setTimeout(() => {
-        if (!res.headersSent) {
-            res.send("Nothing found");
-        }
-    }, 2000);
 })

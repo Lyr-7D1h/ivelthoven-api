@@ -1,7 +1,8 @@
 {
     "name": "api-ivelthoven",
-    "version": 2.0,
+    "version": 2,
     "builds": [
-        { "src": "**/*", "use": "@now/node" }
+        { "src": "*.js", "use": "@now/node" },
+        { "src": "routes/*", "use": "@now/node" }
     ]
 }

@@ -5,12 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "got": "^9.6.0",
-    "restify": "^8.3.3",
-    "sqlite3": "^4.0.8"
+    "mongodb": "^3.2.7",
+    "restify": "^8.3.3"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "API",

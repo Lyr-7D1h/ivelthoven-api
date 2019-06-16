@@ -2,7 +2,7 @@ const restify = require('restify');
 
 // require("./db");
 
-const PORT = 80;
+const PORT = 3000;
 
 const server = restify.createServer({
   name: 'api-ivelthoven',

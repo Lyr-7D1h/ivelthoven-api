@@ -1,8 +1,19 @@
 const restify = require('restify');
+const corsMiddleware = require('restify-cors-middleware')
+
 
 // require("./db");
 
 const PORT = process.env.PORT || 5000;
+ 
+const cors = corsMiddleware({
+  preflightMaxAge: 5, //Optional
+  origins: [
+    'https://projects.ivelthoven.nl', 
+    'https://ivelthoven.github.io'
+  ],
+})
+
 
 const server = restify.createServer({
   name: 'api-ivelthoven',
@@ -10,6 +21,9 @@ const server = restify.createServer({
 });
 
 module.exports = server;
+
+server.pre(cors.preflight);
+server.use(cors.actual);
 
 // Index
 server.get("/", (req, res) => {

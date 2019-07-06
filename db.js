@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const got = require('got');
 
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 
 const mongoConString = process.env.MONGO_CONNECTION_STRING;
 
@@ -17,7 +17,7 @@ const init = () => {
     const client = new MongoClient(mongoConString, { useNewUrlParser: true });
     client.connect((err, db) => {
         console.log('\x1b[36m%s\x1b[0m', "Creating Database..")
-        const dbo = db.db("ivelthovenApi");
+        const dbo = db.db("ivelthovenDB");
 
         createCollections(dbo).then(
             Promise.all([updateGithub(dbo)]).then((values) => {
@@ -71,7 +71,7 @@ const checkGithubRate = () => {
 const updateGithub = (db) => {
     console.log('\x1b[36m%s\x1b[0m', "  Updating github pages..");
     return new Promise((res, rej) => {
-        checkGithubRate((check) => {
+        checkGithubRate().then((check) => {
             if (check) {
                 getJson(github.baseURL + github.repos + github.auth, (data) => {
                     if ( typeof data != "undefined" ) {
@@ -120,7 +120,7 @@ getGithub = () => {
             if (err) {
                 rej(err);
             }
-            const dbo = db.db("ivelthovenApi");
+            const dbo = db.db("ivelthovenDB");
             dbo.collection("github").find({}).toArray(function(err, result) {
                 if (err) throw reject(err);
                 resolve(result);
@@ -133,7 +133,7 @@ getGithubCount = () => {
     return new Promise((resolve, reject) => {
         const client = new MongoClient(mongoConString, { useNewUrlParser: true });
         client.connect((err, db) => {
-            const dbo = db.db("ivelthovenApi");
+            const dbo = db.db("ivelthovenDB");
             dbo.collection("github").countDocuments((err, result) => {
                 if (err){reject(err)};
                 resolve(result);

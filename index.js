@@ -1,5 +1,6 @@
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware')
+const restifyLogger = require("restify-logger");
 
 
 // require("./db");
@@ -24,6 +25,8 @@ module.exports = server;
 
 server.pre(cors.preflight);
 server.use(cors.actual);
+
+server.use(restifyLogger("short"))
 
 // Index
 server.get("/", (req, res) => {

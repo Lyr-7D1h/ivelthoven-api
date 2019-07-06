@@ -78,6 +78,7 @@ const updateGithub = (db) => {
                         const sanitizedData = data.map((repo) => {
                             return {
                                 "_id": repo.id,
+                                "id": repo.id,
                                 "name": repo.name,  
                                 "description": repo.description,        
                                 "created_at": repo.created_at,

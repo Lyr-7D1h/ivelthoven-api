@@ -1,14 +1,16 @@
 const MongoClient = require('mongodb').MongoClient;
 const got = require('got');
 
-const mongoConString = "mongodb+srv://ivelthoven:Mm262n^$43SJLy9y!&h@cluster0-ejy3e.azure.mongodb.net/test?retryWrites=true&w=majority";
+const dotenv = require("dotenv").config();
+
+const mongoConString = process.env.MONGO_CONNECTION_STRING;
 
 const github = {
     username: "ivelthoven",
     baseURL: "https://api.github.com/",
     repos: "users/ivelthoven/repos",
     rateLimit: "rate_limit",
-    auth: "?client_id=23296032&client_secret=b80393c7ebb68b8f6eae6bc051ccd8e9792bf637" 
+    auth: `?client_id=${process.env.GITHUB_API_CLIENT}&client_secret=${process.env.GITHUB_API_SECRET}`
 }
 
 const init = () => {

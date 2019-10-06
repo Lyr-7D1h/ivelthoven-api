@@ -4,9 +4,12 @@
   "description": "An API Server for ivelthoven",
   "main": "index.js",
   "dependencies": {
+    "basic-auth-token": "^0.4.2",
     "dotenv": "^8.0.0",
     "got": "^9.6.0",
     "mongodb": "^3.2.7",
+    "mongoose": "^5.7.3",
+    "node-cron": "^2.0.3",
     "restify": "^8.3.3",
     "restify-cors-middleware": "^1.1.1",
     "restify-logger": "^2.0.1"

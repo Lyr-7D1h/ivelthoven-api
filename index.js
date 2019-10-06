@@ -32,8 +32,11 @@ server.get("/", (req, res) => {
   res.send("Welcome to IVelthoven API");
 });
 
-// Github Routes
+// Routes
 require("./routes/github");
+
+// Scheduler
+require("./scheduler")();
 
 // Start server
 server.listen(PORT, () => {

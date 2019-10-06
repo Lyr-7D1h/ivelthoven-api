@@ -1,4 +1,3 @@
-// const Repositories = require("../db/Repositories");
 const Etags = require("../db/Etags");
 const requester = require("./helpers/requester");
 
@@ -85,7 +84,7 @@ const getAllWithDeployments = () => {
   return new Promise((res, rej) => {
     getAllWithoutDeployments()
       .then(data => {
-        if (!data.hasUpdates) {
+        if (data.hasUpdates) {
           // get deployment for all repos
           const repos = Promise.all(
             data.repos.map(async repo => {

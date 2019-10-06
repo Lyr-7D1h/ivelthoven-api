@@ -6,12 +6,10 @@ const cron = require("node-cron");
 const updateGithub = () => {
   return new Promise((res, rej) => {
     githubModule.getRate().then(rate => {
-      console.log(rate);
       if (rate.remaining) {
         githubModule
           .getAllWithDeployments()
           .then(repos => {
-            // console.log(repos);
             if (repos) {
               repos.forEach((repo, i) => {
                 Repositories.updateOne(
@@ -26,7 +24,6 @@ const updateGithub = () => {
                     }
                   }
                 );
-                console.log(i);
               });
             } else {
               console.log("nothing to update..");

@@ -17,6 +17,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
+    "build": "npm ci",
     "dev": "nodemon index.js"
   },
   "keywords": [

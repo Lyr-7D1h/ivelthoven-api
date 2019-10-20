@@ -37,10 +37,20 @@ const updateGithub = () => {
   });
 };
 
+const http = require("https");
+const stayAwake = () => {
+  http.get(process.env.HEROKU_URL, res => {
+    if (res.statusCode === 200) {
+      console.log("success");
+    }
+  });
+};
+
 // Schedule tasks
 module.exports = () => {
   console.log("\x1b[34m%s\x1b[0m", "setup scheduler");
 
+  // every 5 minutes check github for updates
   cron.schedule("*/5 * * * *", () => {
     console.log("running updateGithub");
     updateGithub()
@@ -48,6 +58,10 @@ module.exports = () => {
         console.log("success");
       })
       .catch(err => errHandler(err));
+  });
+  cron.schedule("*/4 * * * *", () => {
+    console.log("running stayAwake");
+    stayAwake();
   });
 };
 

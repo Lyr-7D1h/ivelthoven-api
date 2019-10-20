@@ -6,6 +6,7 @@ if (!process.env.CONNECTION_STRING) {
   throw new Error("no connection string defined");
 }
 
+exports.ObjectId = mongoose.Types.ObjectId;
 exports.Schema = mongoose.Schema;
 exports.connection = mongoose.createConnection(process.env.CONNECTION_STRING, {
   useCreateIndex: true,

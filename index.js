@@ -1,6 +1,7 @@
 const restify = require("restify");
 const corsMiddleware = require("restify-cors-middleware");
 const restifyLogger = require("restify-logger");
+const fs = require("fs");
 
 // require("./db");
 
@@ -33,7 +34,18 @@ server.get("/", (req, res) => {
 });
 
 // Routes
-require("./routes/github");
+fs.readdir(`${__dirname}/routes`, (err, files) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  files.forEach(file => {
+    if (file.endsWith(".js")) {
+      console.log(`Loaded route ${file}`);
+      require(`${__dirname}/routes/${file}`);
+    }
+  });
+});
 
 // Scheduler
 require("./scheduler")();

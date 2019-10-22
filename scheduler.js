@@ -48,22 +48,28 @@ const stayAwake = () => {
   })
 }
 
+// Random Id Gen
+const randomId = () => {
+  return `${Math.floor(Math.random() * 1000 + 1000)} || `
+}
 // Schedule tasks
 console.log('\x1b[34m%s\x1b[0m', 'setup scheduler')
 
 // every 5 minutes check github for updates
 cron.schedule('*/1 * * * *', () => {
-  console.log('\x1b[34m%s\x1b[0m', 'running updateGithub')
+  const id = randomId()
+  console.log('\x1b[34m%s\x1b[0m', id + 'running updateGithub')
   updateGithub()
-    .then(message => console.log('\x1b[32m%s\x1b[0m', message))
+    .then(message => console.log('\x1b[32m%s\x1b[0m', id + message))
     .catch(err => errHandler(err))
 })
 
 // every 4 minutes make request to heroku endpoint so it stays awake
 cron.schedule('*/5 * * * *', () => {
-  console.log('\x1b[34m%s\x1b[0m', 'running stayAwake')
+  const id = randomId()
+  console.log('\x1b[34m%s\x1b[0m', id + 'running stayAwake')
   stayAwake()
-    .then(message => console.log('\x1b[32m%s\x1b[0m', message))
+    .then(message => console.log('\x1b[32m%s\x1b[0m', id + message))
     .catch(err => errHandler(err))
 })
 

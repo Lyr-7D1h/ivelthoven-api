@@ -52,7 +52,7 @@ const stayAwake = () => {
 console.log('\x1b[34m%s\x1b[0m', 'setup scheduler')
 
 // every 5 minutes check github for updates
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('*/1 * * * *', () => {
   console.log('\x1b[34m%s\x1b[0m', 'running updateGithub')
   updateGithub()
     .then(message => console.log('\x1b[32m%s\x1b[0m', message))
@@ -60,7 +60,7 @@ cron.schedule('*/5 * * * *', () => {
 })
 
 // every 4 minutes make request to heroku endpoint so it stays awake
-cron.schedule('*/4 * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
   console.log('\x1b[34m%s\x1b[0m', 'running stayAwake')
   stayAwake()
     .then(message => console.log('\x1b[32m%s\x1b[0m', message))

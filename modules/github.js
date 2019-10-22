@@ -41,7 +41,6 @@ const getAllWithoutDeployments = () => {
               (err, etags) => {
                 if (err) reject(err)
 
-                console.log(etags)
                 // has updates if it could not find anything
                 const hasUpdates = etags.length === 0
 

@@ -6,7 +6,6 @@ const Repositories = require('./db/Repositories')
 const updateGithub = () => {
   return new Promise((resolve, reject) => {
     githubModule.getRate().then(rate => {
-      console.log(rate)
       if (rate.remaining) {
         githubModule
           .getAllWithDeployments()
@@ -53,7 +52,7 @@ const stayAwake = () => {
 console.log('\x1b[34m%s\x1b[0m', 'setup scheduler')
 
 // every 5 minutes check github for updates
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
   console.log('\x1b[34m%s\x1b[0m', 'running updateGithub')
   updateGithub()
     .then(message => console.log('\x1b[32m%s\x1b[0m', message))

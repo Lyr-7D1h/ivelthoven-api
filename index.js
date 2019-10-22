@@ -36,19 +36,19 @@ server.get('/', (req, res) => {
 // Routes
 fs.readdir(`${__dirname}/routes`, (err, files) => {
   if (err) {
-    console.error(err)
-    process.exit(1)
+    throw err
   }
   files.forEach(file => {
     if (file.endsWith('.js')) {
-      console.log(`Loaded route ${file}`)
+      console.log('\x1b[34m%s\x1b[0m', `Loaded route ${file}`)
       require(`${__dirname}/routes/${file}`)
     }
   })
+  console.log('\n=====================\n')
 })
 
 // Scheduler
-require('./scheduler')()
+require('./scheduler')
 
 // Start server
 server.listen(PORT, () => {

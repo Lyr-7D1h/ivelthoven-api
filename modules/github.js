@@ -1,13 +1,13 @@
-const Etags = require("../db/Etags");
-const requester = require("./helpers/requester");
+const Etags = require('../db/Etags')
+const requester = require('./helpers/requester')
 
 const github = {
-  username: "ivelthoven",
-  baseURL: "https://api.github.com/",
-  repos: "users/ivelthoven/repos",
-  rateLimit: "rate_limit",
+  username: 'ivelthoven',
+  baseURL: 'https://api.github.com/',
+  repos: 'users/ivelthoven/repos',
+  rateLimit: 'rate_limit',
   auth: `?client_id=${process.env.GITHUB_API_CLIENT}&client_secret=${process.env.GITHUB_API_SECRET}`
-};
+}
 
 const getRate = () => {
   return new Promise((resolve, reject) => {
@@ -18,45 +18,48 @@ const getRate = () => {
           resolve({
             limit: data.rate.remaining,
             remaining: data.rate.remaining
-          });
+          })
         } else {
-          reject();
+          reject(new Error('Github is down'))
         }
       })
       .catch(err => {
-        reject(err);
-      });
-  });
-};
+        reject(err)
+      })
+  })
+}
 
 const getAllWithoutDeployments = () => {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     requester
       .getJsonResponse(github.baseURL + github.repos + github.auth)
       .then(response => {
-        if (typeof response.body != "undefined") {
-          if (response.headers["etag"]) {
+        if (typeof response.body !== 'undefined') {
+          if (response.headers.etag) {
             Etags.find(
-              { name: "github", etag: response.headers["etag"] },
+              { name: 'github', etag: response.headers.etag },
               (err, etags) => {
-                if (err) rej(err);
+                if (err) reject(err)
 
-                // if did not find etag create or update
-                if (!etags) {
+                console.log(etags)
+                // has updates if it could not find anything
+                const hasUpdates = etags.length === 0
+
+                // update or create etag if could not find etag
+                if (hasUpdates) {
                   Etags.updateOne(
-                    { name: "github" },
+                    { name: 'github' },
                     {
-                      name: "github",
-                      etag: response.headers["etag"]
+                      name: 'github',
+                      etag: response.headers.etag
                     },
                     { upsert: true },
                     err => {
-                      if (err) rej(err);
+                      if (err) reject(err)
                     }
-                  );
+                  )
                 }
 
-                const hasUpdates = !etags;
                 const repos = response.body.map(repo => {
                   return {
                     id: repo.id,
@@ -68,20 +71,20 @@ const getAllWithoutDeployments = () => {
                     deployment: null,
                     deployment_url: null,
                     api_deployments_url: repo.deployments_url
-                  };
-                });
-                res({ hasUpdates: hasUpdates, repos: repos });
+                  }
+                })
+                resolve({ hasUpdates: hasUpdates, repos: repos })
               }
-            );
+            )
           }
         }
       })
-      .catch(err => rej(err));
-  });
-};
+      .catch(err => reject(err))
+  })
+}
 
 const getAllWithDeployments = () => {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     getAllWithoutDeployments()
       .then(data => {
         if (data.hasUpdates) {
@@ -94,29 +97,29 @@ const getAllWithDeployments = () => {
                   .then(body => {
                     if (body) {
                       if (body[0]) {
-                        repo.deployment = body[0].environment;
-                        if (body[0].environment === "github-pages") {
+                        repo.deployment = body[0].environment
+                        if (body[0].environment === 'github-pages') {
                           repo.deployment_url =
-                            "https://projects.ivelthoven.nl/" + repo.name;
+                            'https://projects.ivelthoven.nl/' + repo.name
                         }
                       }
                     }
-                    return repo;
+                    return repo
                   })
-                  .catch(err => rej(err));
+                  .catch(err => reject(err))
               }
             })
-          );
-          res(repos);
+          )
+          resolve(repos)
         } else {
           // do nothing if no updates
-          res();
+          resolve()
         }
       })
       .catch(err => {
-        rej(err);
-      });
-  });
-};
+        reject(err)
+      })
+  })
+}
 
-module.exports = { getAllWithoutDeployments, getAllWithDeployments, getRate };
+module.exports = { getAllWithoutDeployments, getAllWithDeployments, getRate }

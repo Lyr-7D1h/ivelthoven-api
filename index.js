@@ -1,56 +1,56 @@
-const restify = require("restify");
-const corsMiddleware = require("restify-cors-middleware");
-const restifyLogger = require("restify-logger");
-const fs = require("fs");
+const restify = require('restify')
+const corsMiddleware = require('restify-cors-middleware')
+const restifyLogger = require('restify-logger')
+const fs = require('fs')
 
 // require("./db");
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
 const cors = corsMiddleware({
-  preflightMaxAge: 5, //Optional
+  preflightMaxAge: 5, // Optional
   origins: [
-    "https://projects.ivelthoven.nl",
-    "https://ivelthoven.github.io",
-    "*"
+    'https://projects.ivelthoven.nl',
+    'https://ivelthoven.github.io',
+    '*'
   ]
-});
+})
 
 const server = restify.createServer({
-  name: "api-ivelthoven",
-  version: "1.0.0"
-});
+  name: 'api-ivelthoven',
+  version: '1.0.0'
+})
 
-module.exports = server;
+module.exports = server
 
-server.pre(cors.preflight);
-server.use(cors.actual);
+server.pre(cors.preflight)
+server.use(cors.actual)
 
-server.use(restifyLogger("short"));
+server.use(restifyLogger('short'))
 
 // Index
-server.get("/", (req, res) => {
-  res.send("Welcome to IVelthoven API");
-});
+server.get('/', (req, res) => {
+  res.send('Welcome to IVelthoven API')
+})
 
 // Routes
 fs.readdir(`${__dirname}/routes`, (err, files) => {
   if (err) {
-    console.error(err);
-    process.exit(1);
+    console.error(err)
+    process.exit(1)
   }
   files.forEach(file => {
-    if (file.endsWith(".js")) {
-      console.log(`Loaded route ${file}`);
-      require(`${__dirname}/routes/${file}`);
+    if (file.endsWith('.js')) {
+      console.log(`Loaded route ${file}`)
+      require(`${__dirname}/routes/${file}`)
     }
-  });
-});
+  })
+})
 
 // Scheduler
-require("./scheduler")();
+require('./scheduler')()
 
 // Start server
 server.listen(PORT, () => {
-  console.log("\x1b[34m%s\x1b[0m", `Ready on ${server.url}`);
-});
+  console.log('\x1b[34m%s\x1b[0m', `Ready on ${server.url}`)
+})

@@ -1,6 +1,11 @@
 const settings = require('./settings')
 
 const blogSchema = new settings.Schema({
+  id: {
+    type: settings.ObjectId,
+    required: true,
+    unique: true
+  },
   createdOn: {
     type: Date,
     required: true

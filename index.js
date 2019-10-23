@@ -14,7 +14,7 @@ const cors = corsMiddleware({
     // 'https://projects.ivelthoven.nl',
     // 'https://ivelthoven.github.io',
     // 'https://blog.ivelthoven.nl',
-    // 'https://blog.ivelthoven.nl'
+    'http://localhost:3000'
   ]
 })
 

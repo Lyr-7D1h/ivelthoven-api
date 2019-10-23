@@ -9,13 +9,7 @@ const PORT = process.env.PORT || 5000
 
 const cors = corsMiddleware({
   preflightMaxAge: 5, // Optional
-  origins: [
-    'https://*.ivelthoven.nl'
-    // 'https://projects.ivelthoven.nl',
-    // 'https://ivelthoven.github.io',
-    // 'https://blog.ivelthoven.nl',
-    'http://localhost:3000'
-  ]
+  origins: ['https://*.ivelthoven.nl']
 })
 
 const server = restify.createServer({

@@ -1,6 +1,6 @@
-const server = require("../index");
-const authorization = require("../modules/authorization");
+const server = require('../index')
+const authorization = require('../modules/authorization')
 
-server.post("/auth", authorization, (req, res, next) => {
-  res.send({ isValid: true });
-});
+server.post('/auth', authorization, (req, res, next) => {
+  res.send({ isValid: true })
+})

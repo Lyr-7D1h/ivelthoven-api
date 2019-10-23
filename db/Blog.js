@@ -1,11 +1,11 @@
-const settings = require("./settings");
+const settings = require('./settings')
 
 const blogSchema = new settings.Schema({
   createdOn: {
     type: Date,
     required: true
   },
-  modifiedON: {
+  modifiedOn: {
     type: Date
   },
   category: {
@@ -19,6 +19,6 @@ const blogSchema = new settings.Schema({
     type: String,
     required: true
   }
-});
+})
 
-module.exports = settings.connection.model("Blog", blogSchema);
+module.exports = settings.connection.model('Blog', blogSchema)

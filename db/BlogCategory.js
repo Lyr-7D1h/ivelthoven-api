@@ -1,4 +1,4 @@
-const settings = require("./settings");
+const settings = require('./settings')
 
 const blogCategorySchema = new settings.Schema({
   id: {
@@ -11,12 +11,12 @@ const blogCategorySchema = new settings.Schema({
     required: true,
     unique: true
   },
-  priority: {
-    type: Number
+  description: {
+    type: String
   },
   parent: {
     type: settings.ObjectId
   }
-});
+})
 
-module.exports = settings.connection.model("BlogCategory", blogCategorySchema);
+module.exports = settings.connection.model('BlogCategory', blogCategorySchema)

@@ -10,9 +10,11 @@ const PORT = process.env.PORT || 5000
 const cors = corsMiddleware({
   preflightMaxAge: 5, // Optional
   origins: [
-    'https://projects.ivelthoven.nl',
-    'https://ivelthoven.github.io',
-    '*'
+    'https://*.ivelthoven.nl'
+    // 'https://projects.ivelthoven.nl',
+    // 'https://ivelthoven.github.io',
+    // 'https://blog.ivelthoven.nl',
+    // 'https://blog.ivelthoven.nl'
   ]
 })
 

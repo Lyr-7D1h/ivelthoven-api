@@ -1,6 +1,6 @@
 const server = require('../index')
 const Blog = require('../db/Blog')
-const authorization = require('../modules/authorization')
+const auth = require('../modules/authorization')
 
 server.get('/blog', (req, res, next) => {
   Blog.find({})
@@ -14,7 +14,7 @@ server.get('/blog', (req, res, next) => {
     })
 })
 
-server.post('/blog', authorization, (req, res, next) => {
+server.post('/blog', auth.cookie, (req, res, next) => {
   req.body.createdOn = Date.now()
   const blog = new Blog(req.body)
 
@@ -39,7 +39,7 @@ server.post('/blog', authorization, (req, res, next) => {
     })
 })
 
-server.put('/blog/:id', authorization, (req, res, next) => {
+server.put('/blog/:id', auth.basic, (req, res, next) => {
   Blog.updateOne({ _id: req.params.id }, req.body)
     .then(() => {
       res.send()

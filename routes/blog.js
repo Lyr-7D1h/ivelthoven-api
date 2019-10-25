@@ -9,7 +9,7 @@ server.get('/blog', (req, res, next) => {
     })
     .catch(err => {
       console.error(err)
-      res.statusCode = 501
+      res.statusCode = 500
       res.send({ error: err.message })
     })
 })
@@ -29,12 +29,12 @@ server.post('/blog', authorization, (req, res, next) => {
           res.send(t)
         })
         .catch(err => {
-          res.statusMessage = 501
+          res.statusCode = 500
           res.send({ error: err.message })
         })
     })
     .catch(err => {
-      res.statusMessage = 400
+      res.statusCode = 400
       res.send({ error: err.message })
     })
 })
@@ -45,7 +45,7 @@ server.put('/blog/:id', authorization, (req, res, next) => {
       res.send()
     })
     .catch(err => {
-      res.statusMessage = 400
+      res.statusCode = 400
       res.send(err.message)
     })
 })

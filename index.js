@@ -21,6 +21,8 @@ module.exports = server
 
 server.pre(cors.preflight)
 server.use(cors.actual)
+server.use(restify.plugins.jsonBodyParser())
+server.use(restify.plugins.queryParser())
 
 server.use(restifyLogger('short'))
 

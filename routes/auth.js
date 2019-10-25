@@ -3,9 +3,6 @@ const AuthCookie = require('../db/AuthCookie')
 const server = require('../index')
 const auth = require('../modules/authorization')
 
-const cipher = 'aes-256-cbc'
-const iv = crypto.randomBytes(16)
-
 server.post('/auth', auth.basic, (req, res, next) => {
   const key = crypto.randomBytes(16).toString('hex')
   const secret = crypto.randomBytes(32)

@@ -32,7 +32,6 @@ const basicAuth = (req, res, next) => {
 const cookieAuth = (req, res, next) => {
   if (req.cookies && req.cookies.admin) {
     const [key, secret] = req.cookies.admin.toString('hex').split(':')
-    console.log(key, secret)
     if (key && secret) {
       AuthCookie.find({ key: key })
         .then(docs => {

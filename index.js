@@ -1,3 +1,5 @@
+require('make-promises-safe')
+
 const restify = require('restify')
 const corsMiddleware = require('restify-cors-middleware')
 const restifyLogger = require('restify-logger')
@@ -21,6 +23,7 @@ module.exports = server
 
 server.pre(cors.preflight)
 server.use(cors.actual)
+server.use(require('cookie-parser')())
 
 server.use(restifyLogger('short'))
 

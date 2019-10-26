@@ -16,7 +16,8 @@ const cors = corsMiddleware({
     // 'https://projects.ivelthoven.nl',
     // 'https://blog.ivelthoven.nl',
     // 'https://ivelthoven.github.io'
-  ]
+  ],
+  allowHeaders: ['Authorization']
 })
 
 const server = restify.createServer({
@@ -28,6 +29,7 @@ module.exports = server
 
 server.pre(cors.preflight)
 server.use(cors.actual)
+
 server.use(restify.plugins.jsonBodyParser())
 server.use(restify.plugins.queryParser())
 server.use(require('cookie-parser')())

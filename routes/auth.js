@@ -20,6 +20,7 @@ server.post('/auth', auth.basic, (req, res, next) => {
         'Set-Cookie',
         `admin=${token}; Path=/; Domain=.ivelthoven.nl; HttpOnly; Secure`
       )
+      res.header('Access-Control-Allow-Credentials', true)
       res.send({ isValid: true })
     })
     .catch(err => {

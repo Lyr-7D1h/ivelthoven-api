@@ -16,7 +16,10 @@ server.post('/auth', auth.basic, (req, res, next) => {
     .save()
     .then(() => {
       const token = `${key}:${secret.toString('hex')}`.toString('base64')
-      res.header('Set-Cookie', `admin=${token}`)
+      res.header(
+        'Set-Cookie',
+        `admin=${token}; Path=/; Domain=.ivelthoven.nl; HttpOnly; Secure`
+      )
       res.send({ isValid: true })
     })
     .catch(err => {

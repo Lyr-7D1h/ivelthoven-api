@@ -16,10 +16,15 @@ server.post('/auth', auth.basic, (req, res, next) => {
     .save()
     .then(() => {
       const token = `${key}:${secret.toString('hex')}`.toString('base64')
-      res.header(
-        'Set-Cookie',
-        `admin=${token}; Path=/; Domain=.ivelthoven.nl; HttpOnly; Secure`
-      )
+      if (process.env === 'development') {
+        res.header('Set-Cookie', `admin=${token}; Path=/;`)
+      } else {
+        res.header(
+          'Set-Cookie',
+          `admin=${token}; Path=/; Domain=.ivelthoven.nl; HttpOnly; Secure`
+        )
+      }
+      res.header('Set-Cookie', `admin=${token}; Path=/;`)
       res.header('Access-Control-Allow-Credentials', true)
       res.send({ isValid: true })
     })

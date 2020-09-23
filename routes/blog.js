@@ -34,12 +34,13 @@ server.post('/blog', auth.cookie, (req, res, next) => {
         })
     })
     .catch(err => {
+      console.error(err)
       res.statusCode = 400
       res.send({ error: err.message })
     })
 })
 
-server.put('/blog/:id', auth.basic, (req, res, next) => {
+server.put('/blog/:id', auth.cookie, (req, res, next) => {
   Blog.updateOne({ _id: req.params.id }, req.body)
     .then(() => {
       res.send()

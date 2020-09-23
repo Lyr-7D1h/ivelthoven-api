@@ -2,9 +2,9 @@ const Etags = require('../db/Etags')
 const requester = require('./helpers/requester')
 
 const github = {
-  username: 'ivelthoven',
+  username: 'lyr-7d1h',
   baseURL: 'https://api.github.com/',
-  repos: 'users/ivelthoven/repos',
+  repos: 'users/lyr-7d1h/repos',
   rateLimit: 'rate_limit',
   auth: `?client_id=${process.env.GITHUB_API_CLIENT}&client_secret=${process.env.GITHUB_API_SECRET}`
 }

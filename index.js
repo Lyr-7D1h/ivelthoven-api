@@ -14,7 +14,7 @@ const cors = corsMiddleware({
   origins: [
     'https://projects.ivelthoven.nl',
     'https://blog.ivelthoven.nl',
-    'https://ivelthoven.github.io',
+    'https://lyr-7d1h.github.io',
     'http://localhost:3000'
   ],
   allowHeaders: ['Authorization']
